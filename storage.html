@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <h1 id="real"></h1>
+    <h3 id="contador"></h3>
+    <button onclick="incrementar()">Incrementar valor de las visitas</button><br>
+    <button onclick="decrementar()">Decrementar valor de las visitas</button><br>
+    <button onclick="logout()">Logout</button>
+</body>
+<script>
+//En primer lugar, comprobaremos si el navegador soporta Storage y mostraremos un mensaje con el nombre del usuario si este se ha logueado en la pagina, diferenciando si es su primera visita o ya ha entrado en más ocasiones.
+//Utilizaremos una funcion para llevar el control de las veces que el usuario ha accedido a la pagina. Crearemos dos funciones para incrementar y decrementar el valor del contador anterior.
+//Finalmente crearemos otra funcion para hacer logout y restablecer los valores anteriores
+
+// Comprobamos si el navegador soporta Storage
+
+function contarVisita(nombre) {
+  // Obtener el contador de visitas actual para el usuario
+  let contador = sessionStorage.getItem(nombre);
+  
+  // Si el usuario no ha visitado antes, inicializar el contador en 1
+  if (contador === null) {
+    contador = 1;
+  } else {
+    // Si el usuario ya ha visitado, aumentar el contador en 1
+    contador = parseInt(contador) + 1;
+  }
+  
+  // Guardar el nuevo valor del contador en el almacenamiento
+  sessionStorage.setItem(nombre, contador);
+  
+  // devuelve el contador de visitas actual
+  return contador;
+}
+
+function incrementar(){
+    sessionStorage.setItem("contador", Number(sessionStorage.getItem("contador"))+1)
+    document.getElementById("contador").innerHTML = "Contador: " + sessionStorage.getItem("contador")
+}
+
+function decrementar(){
+    sessionStorage.setItem("contador", Number(sessionStorage.getItem("contador"))-1)
+    document.getElementById("contador").innerHTML = "Contador: " + sessionStorage.getItem("contador")
+    
+}
+
+function logout(){
+    sessionStorage.setItem("contador", 0)
+    document.getElementById("contador").innerHTML = "Contador: " + sessionStorage.getItem("contador")
+    document.getElementById("real").innerHTML = sessionStorage.getItem("contador")
+    window.sessionStorage.clear();
+    location.reload(true);
+}
+if (typeof(Storage) !== "undefined") {
+    // Obtenemos el nombre del usuario almacenado en el Storage
+    var userName = sessionStorage.getItem("userName");
+    // Comprobamos si el usuario ya se ha logueado anteriormente
+    if (userName === null) {
+        // Es la primera visita del usuario
+        userName = prompt("Por favor ingresa tu nombre:");
+        sessionStorage.setItem("userName", userName);
+        alert("Bienvenido " + userName + ", es tu primera visita en nuestra página.");
+    } else {
+        // El usuario ya ha visitado la página anteriormente
+        alert("Bienvenido de nuevo " + userName + "!");
+    }
+} else {
+    // El navegador no soporta Storage
+    alert("Lo siento, tu navegador no soporta almacenamiento local. Por favor actualiza a una versión más reciente.");
+}
+
+document.getElementById("real").innerHTML = contarVisita(userName)
+
+</script>
