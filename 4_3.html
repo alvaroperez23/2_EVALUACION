@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>4.3</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <h1 id="h1">Este es un titulo dinamico</h1>
+
+    <button onclick="cambiarColorVerde()">Cambiar color a verde</button>
+    <button onclick="cambiarColorRojo()">Cambiar color a rojo</button>
+    <button onclick="cambiarTamañoMenos()">Cambiar tamaño fuente</button>
+    <button onclick="cambiarTamañoMas()">Cambiar tamaño fuente</button>
+  </body>
+
+<script>
+    function cambiarColorVerde(){
+        document.getElementById('h1').style.color = 'green';
+    }
+
+    function cambiarColorRojo(){
+        document.getElementById('h1').style.color = 'red';
+    }
+
+    function cambiarTamañoMenos(){
+        document.getElementById('h1').style.fontSize = '150%';
+    }
+
+    function cambiarTamañoMas(){
+        document.getElementById('h1').style.fontSize = '300%';
+    }
+</script>
+
+    
+</html>

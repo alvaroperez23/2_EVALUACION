@@ -1,0 +1,65 @@
+<script>
+    // let realizado = true
+    // const tareaCompletada = new Promise((resolve, reject) =>
+    // {    
+    //     if(realizado){
+    //         const trabajoCompletado="La tarea se ha completado";
+    //         resolve(trabajoCompletado);
+    //         console.log(trabajoCompletado)
+    //     }else{
+    //         const trabajoFallido = "No he podido completar la tarea";
+    //         reject(trabajoFallido)
+    //         console.log(trabajoFallido)
+    //     }
+    // })
+    
+
+
+    const promise = new Promise((resolve, reject) =>
+    {
+        const numero = Math.floor(Math.random()*10);
+        setTimeout(() => (numero > 5 ? resolve(numero) : reject(new Error("Menor a 5"))), 5000);
+    })
+    promise
+    .then(numero => console.log(numero))
+    .catch(error => console.error(error));
+
+
+
+    //Ejemplo 1
+    setTimeout(function(){
+        console.log("He ejecutado la funcion del ejemplo 1")}, 7000)
+
+    //Ejemplo 2
+    setTimeout(() => console.log("Esta es la parte de asincrono"), 4000)
+
+    //Ejemplo 3
+    let miPromesa = new Promise((resolve, reject) => {
+        setTimeout(function(){
+            resolve(console.log("¡Ejecutada la promesa en 3 segundos"));
+        })
+    })
+
+    //Ejemplo 4
+    let realizado = true
+    const tareaCompletada = new Promise ((resolve, reject) => {
+        if(realizado){
+            const trabajoCompletado = "+";
+            resolve(trabajoCompletado);
+            console.log(trabajoCompletado);
+        }else{
+            const trabajoFallido = "No he podido"
+            reject(trabajoFallido);
+            console.log(trabajoFallido)
+        }
+    })
+
+
+    //Ejemplo 5
+    let miPromesa2 = new Promesa ((resolve, reject) => {
+        const numero = Math.floor(Math.random() *10);
+        setTimeout(() => numero > 5 ? resolve(numero):reject(new Error("Obtenido un numero menor que 5")), 5000);
+    })
+    miPromesa2.then(numero => console.log(numero));
+    miPromesa2.catch(error => console.log(error));
+</script>

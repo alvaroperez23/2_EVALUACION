@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<head>
+
+</head>
+<body>
+<script>
+    const url2 = "https://jasonplaceholder.typicode.com/posts/";
+    fetch(url2)
+
+    .then(reponse => reponse.json())
+    .then(reponse => console.log(reponse))
+    .catch(error => console.error(error));
+</script>
+</body>

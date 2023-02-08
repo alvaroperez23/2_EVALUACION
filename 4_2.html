@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>4.2</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div>
+    <h3>Primer Bloque de parrafos</h3>
+      <p>Este es el primer párrafo</p>
+      <p>Este es el segundo párrafo</p>
+      <p>Este es el tercer párrafo</p>
+    </div>
+
+    <div>
+        <h3>Segundo Bloque de parrafos</h3>
+          <p id="p1">Este es el primer párrafo</p>
+          <p id="p2">Este es el segundo párrafo</p>
+          <p id="p3">Este es el tercer párrafo</p>
+    </div>
+
+    <button onclick="puntoFinal()">Agregar un punto al final de cada parrafo del segundo bloque</button>
+  </body>
+
+<script>
+
+    
+    function puntoFinal(){
+        document.getElementById('p1').innerHTML+= ".";
+        document.getElementById('p2').innerHTML+= ".";
+        document.getElementById('p3').innerHTML+= ".";
+    }
+</script>
+
+    
+</html>

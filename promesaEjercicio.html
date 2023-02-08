@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <div id="mensajes">
+
+    </div>
+
+    <input type="button" onclick="probarPromise()" value="Pulsa aqui">
+</body>
+
+<script>
+    const antes = "Empieza el código síncrono"
+    const dentro = "Dentro de la promesa, antes del timeout. Empieza el código asíncrono"
+    const then = "Código asíncrono terminado"
+    const fuera = "Código síncrono terminado"
+
+    let contador = 0;
+    
+    function probarPromise() {
+        contador++;
+        let indice = contador
+        const mensajes = document.getElementById("mensajes");
+        mensajes.insertAdjacentHTML("beforeend", indice + ") " + antes + "<br>")
+
+        const promise = new Promise((resolve, reject) => {
+
+            mensajes.insertAdjacentHTML("beforeend", indice + ") " + dentro + "<br>")
+
+            setTimeout(() => {
+                resolve(indice);
+            }, Math.random() * 4000 + 1000)
+
+
+        })
+        promise.then(function(val) {
+            mensajes.insertAdjacentHTML("beforeend", indice + ") " + then + "<br>")
+        })
+
+
+        promise.finally(() => {
+            mensajes.insertAdjacentHTML("beforeend", indice + ") " + fuera + "<br>")
+        })
+
+    }
+
+
+
+</script>

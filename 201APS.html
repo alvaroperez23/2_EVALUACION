@@ -1,0 +1,128 @@
+<!-- Se trata de crear un formulario lo más parecido al de la imagen siguiente:
+Se debe añadir un checkbox para seleccionar/deseleccionar todos los días con
+disponibilidad.
+Realizar una validación (débil, en el lado del cliente) utilizando indistintamente los
+métodos vistos en clase (los tres deben estar representados) con las siguientes
+restricciones:
+• Nombre: debe ser obligatorio
+• Mensaje: de entre 2 y 500 caracteres
+• Color por defecto: oscuro
+• Días: seleccionar al menos dos
+• Preferente: por defecto marcado: lunes
+• Botón de “Hacer click”: ir a Google.com
+Adaptar el formulario, para que al hacer clic para enviar información, se envíe la
+información a un correo electrónico en texto plano.
+ -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="201APS.js"></script>
+</head>
+
+<body style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
+
+    <form id="form" name="f1" action="mailto:alvaroperezsanchez23@gmail.com" method="post">
+        <div align="center">
+            <fieldset>
+                <legend>Datos personales</legend>
+                <label>Introduce tu nombre</label>
+                <input type="text" name="nombre" required value="Alvaro">
+                <br><br>
+                <label>Mensaje</label><br><br>
+                <input type="text" width="100" height="100" minlength="2" maxlength="500" value="Lolololo">
+                <br><br>
+            </fieldset>
+            <br><br>
+            <label>Elige un color:</label>
+            <br>
+            Rojo<input type="radio" name="color" value="Rojo"><br>
+            Verde<input type="radio" name="color" value="Verde"><br>
+            Azul<input type="radio" name="color" value="Azul"><br>
+            Oscuro<input type="radio" name="color" value="Oscuro" checked>
+            <br><br>
+            <label>Selecciona una asignatura</label>
+            <select name="asignatura">
+                <option value="DWEC">DWEC</option>
+                <option value="DWES">DWES</option>
+                <option value="DAW">DAW</option>
+                <option value="DIW">DIW</option>
+                <option value="EIE">EIE</option>
+                <option value="IGS">IGS</option>
+            </select>
+            <br><br>
+            <label>Selecciona los dias con disponibilidad</label><br>
+            <input type="checkbox" id="lunes" value="lunes"><label>Lunes</label><br>
+            <input type="checkbox" id="martes" value="martes"><label>Martes</label><br>
+            <input type="checkbox" id="miercoles" value="miercoles"><label>Miercoles</label><br>
+            <input type="checkbox" id="jueves" value="jueves"><label>Jueves</label><br>
+            <input type="checkbox" id="viernes" value="viernes"><label>Viernes</label><br>
+             
+            <br><input type="checkbox" id="marcarTodo">Marcar todos los checkbox</a> |
+            <br><input type="checkbox" id="desmarcarTodo">Desmarcar todos los checkbox</a>
+            
+            <input type="number" id="confirmacion" min="2" max="7" hidden>
+            <br><br>
+
+            <label>Selecciona el dia preferente</label>
+            <select id="preferencia">
+                <option value="Lunes" selected>Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miercoles">Miercoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+            </select>
+            <br><br>
+            <input type="submit" value="Haz click para enviar la informacion" name="boton" onclick="dias()">
+            <input type="reset" value="Comenzar a rellenar de nuevo">
+            <input type="button" onclick="location.href='http://google.com';" value="Haz click sobre mi" />
+        </div>
+    </form>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById('marcarTodo').addEventListener('click', function(e) {
+            e.preventDefault();
+            //seleccionarTodo();
+            checkAll();
+        });
+        document.getElementById('desmarcarTodo').addEventListener('click', function(e) {
+            e.preventDefault();
+            //desmarcarTodo();
+            uncheckAll();
+        });
+    });
+
+    function seleccionarTodo() {
+        for (let i=0; i < document.f1.elements.length; i++) {
+            if(document.f1.elements[i].type === "checkbox") {
+                document.f1.elements[i].checked = true;
+            }
+        }
+    }
+
+    function desmarcarTodo() {
+        for (let i=0; i<document.f1.elements.length; i++) {
+            if(document.f1.elements[i].type == "checkbox") {
+                document.f1.elements[i].checked = false
+            }
+        }
+    }
+
+    function checkAll() {
+        document.querySelectorAll('#formElement input[type=checkbox]').forEach(function(checkElement) {
+            checkElement.checked = true;
+        });
+    }
+
+    function uncheckAll() {
+        document.querySelectorAll('#formElement input[type=checkbox]').forEach(function(checkElement) {
+            checkElement.checked = false;
+        });
+    }
+</script>
+
+
+</html>

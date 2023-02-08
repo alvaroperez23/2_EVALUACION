@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>4.1</title>
+    <meta charset="UTF-8">
+  </head>
+  <body>
+    <div id="myDIV">
+      <p>Este es el primer párrafo.</p>
+      <p>Este es el segundo párrafo.</p>
+      <p>Este es el tercer párrafo.</p>
+      <button onclick="verificarHijos()">Cantidad de hijos del DIV</button>
+      <p id="hijos"></p>
+      <button onclick="tiposNodo()">Tipos de nodos que hay</button>
+      <p id="tiposnodo"></p>
+    </div>
+  </body>
+
+<script>
+    function verificarHijos(){
+        const element = document.getElementById("myDIV");
+        let numero = element.childNodes.length;
+        document.getElementById("hijos").innerHTML = numero;
+    }
+    function tiposNodo(){
+        const nodeList = document.body.childNodes;
+
+        let text = "";
+
+        for (let i = 0; i < nodeList.length; i++) {
+            text += nodeList[i].nodeName + "<br>";
+        }
+
+        document.getElementById("tiposnodo").innerHTML = text;
+    }
+</script>
+
+    
+</html>

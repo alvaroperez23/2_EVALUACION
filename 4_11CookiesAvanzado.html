@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Ejemplo de botones de cookies</title>
+    <meta charset="UTF-8">
+</head>
+
+<body>
+    <button id="verTodas">Ver Todas</button>
+    <button id="crearCookie">Crear Cookie</button>
+    <button id="modificarCookie" onclick="getCookie()">Modificar Cookie</button>
+    <button id="leerCookie">Leer Cookie</button>
+    <button id="borrarCookie">Borrar Cookie</button>
+    <p id="cookie"></p>
+</body>
+<script>
+
+
+    document.getElementById('verTodas').addEventListener("click", verTodas())
+    document.getElementById('crearCookie').addEventListener('click', )
+    document.getElementById('modificarCookie').addEventListener('click')
+    document.getElementById('leerCookie').addEventListener('click')
+    document.getElementById('borrarCookie').addEventListener('click')
+    
+    function verTodas() {
+        alert("Cookies actuales: " + document.cookie)
+    }
+
+    
+
+    function borrarCookie() {
+        let nombre = prompt("Introduzca el nombre de la cookie a borrrar")
+        deleteCookie(nombre) //Para borrar setCookie
+        verTodas();
+    }
+
+    function crearCookie(){
+        let nombre = prompt("Indique el nombre de la cookie a introducir: ");
+        let valor = prompt("Indique el valor de esta cookie: ");
+        let dias = prompt("Indique los días hasta la expiracion: ");
+        let hoy = new Date().getMilliseconds();
+        hoy.setMilliseconds(Number(fecha * 60 * 60 * 1000) + hoy)
+        setCookie(nombre, valor, dias)
+        verTodas()
+    }
+
+    
+    function modificarCookie() {
+        let nombre = prompt("Indique el nombre de la cookie a introducir: ");
+        let valor = prompt("Indique el valor de esta cookie: ");
+        let dias = prompt("Indique los días hasta la expiracion: ");
+        let hoy = new Date().getMilliseconds();
+        hoy.setMilliseconds(Number(fecha * 60 * 60 * 1000) + hoy)
+        setCookie(nombre, valor, dias)
+        verTodas();
+    }
+
+    function leerCookie() {
+        let nombre = prompt("Nombre de la cookie a leer")
+        alert(getCookie(nombre))
+    }
+
+
+    //////////////////////////////////////////////////////////////////////////////
+
+   
+    function getCookie(nombre) {
+        let name = nombre + "="; //Guarda en la variable "name" el nombre y el igual que lo acompaña en la estructura de la cookie
+
+        let ca = document.cookie.split(';'); //El "split" permite guardar en "ca" la estructura de la cookie en forma de array, separando los elementos por cada ";"
+
+        for (let i = 0; i < ca.length; i++) { //Recorremos ese array
+            let c = ca[i];
+            while (c.charAt(0) == ' ') { // Mientras que el primer caracter este vacío
+                c = c.substring(1); //Se borra el contenido vacio hasta que quede contenido real
+            }
+            if (c.indexOf(name) == 0) { //Si el nombre es encontrado
+                document.getElementById('cookie').innerHTML = c.substring(name.length, c.length);
+            }
+        }
+        return "NO";
+    }
+
+    function setCookie(nombre, valor, dias) {
+        
+        document.cookie = nombre + "=" + valor + ";expires=" + dias;
+    }
+
+</script>
+
+</html>
