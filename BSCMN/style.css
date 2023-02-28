@@ -1,0 +1,130 @@
+/*******************************************************************************\ 
+ Reglas generales
+\*******************************************************************************/
+*{
+    background-color: lightblue;
+}
+
+.main {
+    width: fit-content;
+    font-family: 'Courier New', monospace;
+}
+
+
+/*******************************************************************************\ 
+ Sección de cabecera (incluye título, formulario y botón generar)
+\*******************************************************************************/
+.header > h1 {
+    text-align: center;
+    letter-spacing: 1rem;
+}
+
+.formulario-juego,
+.formulario,
+.entrada {
+    display: flex;
+}
+
+.formulario-juego {
+    justify-content: space-between;
+    margin: 0rem 2rem;
+}
+
+.formulario {
+    flex-direction: column;
+}
+
+.entrada {
+    margin-bottom: 0.5rem;
+    align-items: center;
+}
+.entrada > label {
+    width: 30rem;
+}
+.entrada > input {
+    width: 4rem;
+    height: 4rem;
+    text-align: center;
+}
+
+.btn-generar {
+    cursor: pointer;
+    margin-left: 1rem;
+    padding: 0rem 2rem;
+}
+
+
+/*******************************************************************************\ 
+ Sección del Buscaminas (incluye la cabcera del juego, el juego y el resultado)
+\*******************************************************************************/
+.contenedor-juego {
+    display: flex;
+    flex-direction: column;
+    margin: 2rem 3rem;
+    align-items: center;
+}
+
+.hidden {
+    display: none;
+}
+
+
+/* Contador de banderas */
+.contenedor-juego > h2 {
+    margin-bottom: 1rem;
+}
+#num-banderas {
+    color: blue;
+}
+
+#banderas-restantes {
+    color: red;
+}
+/* //Contador de banderas */
+
+/* Juego */
+.juego {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: grey;
+    margin-bottom: 0.5rem;
+}
+
+.juego div {
+    height: 4rem;
+    width: 4rem;
+    box-sizing: border-box;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.marcada {
+    background-color: rgb(181, 179, 179);
+    font-size: 3rem;
+    text-align: center;
+    line-height: 4rem;
+}
+
+.bandera {
+    font-size: 2rem;
+    text-align: center;
+    line-height: 4rem;
+}
+
+.back-red {
+    background-color: rgb(255, 0, 0) !important;
+}
+
+.back-green {
+    background-color: rgb(0, 134, 0) !important;
+}
+/* // Juego */
+
+
+/* Resultado */
+.resultado-juego {
+    font-size: 2.5vw;
+    font-weight: bold;
+    text-align: center;
+    padding: 1rem 0rem;
+}
+/* //Resultado */
