@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscaminas</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+<body>
+    <div class="main">
+        <div class="header">
+            <h1>EL BUSCAMINAS DE DAW</h1>
+            <div class="formulario-juego">
+                <div class="formulario">
+                    <div class="entrada">
+                        <label for="tamaño">TAMAÑO (min 5, max 20): </label>
+                        <input id="tamaño" type="number" min="5" max="20" value="5">
+                    </div>
+                    <div class="entrada">
+                        <label for="num-bombas">Nº DE BOMBAS (min 1, max: Tamaño x Tamaño): </label>
+                        <input id="num-bombas" type="number" min="1" value="1">
+                    </div>
+                    <div class="entrada">
+                        <label for="dificultad">DIFICULTAD DE 1 a 3 (1:Facil - 3:Dificil): </label>
+                        <input id="dificultad" type="number" min="1" max="3"value="2">
+                    </div>
+                </div>
+                <button class="btn-generar">Empezar juego</button>
+            </div>
+        </div>
+        <div class="contenedor-juego hidden">
+            <h2><div id="puntuacion-maxima"></div></h2>
+            <h3><div id="countdown"></div></h3>
+            <h2>Banderas colocadas: <span id="num-banderas"></span> (faltan <span id="banderas-restantes"></span>)</h2>
+            <div class="juego"></div>
+            <div class="resultado-juego"></div>
+            <div id="puntuacion"></div>
+            
+        </div>
+    </div>
+</body>
+</html>

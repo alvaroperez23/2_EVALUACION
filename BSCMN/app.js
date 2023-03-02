@@ -6,49 +6,52 @@ document.addEventListener('DOMContentLoaded', () => {
     const contadorBanderas = document.getElementById('num-banderas');
     const contadorBanderasRestantes = document.getElementById('banderas-restantes');
     const botonGenerar = document.querySelector('.btn-generar');
+    const puntuacion = document.getElementById('puntuacion');
+    const nombreUsuario = prompt("¿Cual es tu nombre?");
 
     botonGenerar.addEventListener('click', crearJuego);
 
-    let tamaño = 10;             
+    let tamaño = 10;
     let numBombas = 20;         // => Número de bombas. Se modifica en crearJuego().
     let numBanderas = 0;        // => Número de banderas marcadas
     let casillas = [];          // => Array con las casillas
     let finPartida = false;
-    let dificultad = 2;
+    let dificultad = 1;
+    let timeLeft = 0;
 
-    
+
     function añadeNumeros() {
-        for (let i=0; i < casillas.length; i++) {
+        for (let i = 0; i < casillas.length; i++) {
             // Nº de bombas contiguas a una casilla
-            let total = 0;                                      
+            let total = 0;
             // Para evaluar los bordes
-            const estaBordeIzq = (i % tamaño === 0);             
-            const estaBordeDech = (i % tamaño === tamaño - 1);    
+            const estaBordeIzq = (i % tamaño === 0);
+            const estaBordeDech = (i % tamaño === tamaño - 1);
 
             if (casillas[i].classList.contains('vacio')) {
                 // Checkeamos casilla anterior
-                if (i > 0 && !estaBordeIzq && casillas[i-1].classList.contains('bomba')) total++;
-                
+                if (i > 0 && !estaBordeIzq && casillas[i - 1].classList.contains('bomba')) total++;
+
                 // Checkeamos casilla siguiente
-                if (i < (tamaño*tamaño-1) && !estaBordeDech && casillas[i+1].classList.contains('bomba')) total++;
+                if (i < (tamaño * tamaño - 1) && !estaBordeDech && casillas[i + 1].classList.contains('bomba')) total++;
 
                 // Checkeamos casilla superior
-                if (i > tamaño && casillas[i-tamaño].classList.contains('bomba')) total++;
-                
+                if (i > tamaño && casillas[i - tamaño].classList.contains('bomba')) total++;
+
                 // Checkeamos casilla siguiente de la fila anterior
-                if (i > (tamaño-1) && !estaBordeDech && casillas[i+1-tamaño].classList.contains('bomba')) total++;
-                
+                if (i > (tamaño - 1) && !estaBordeDech && casillas[i + 1 - tamaño].classList.contains('bomba')) total++;
+
                 // Checkeamos casilla anterior de la fila anterior
-                if (i > tamaño && !estaBordeIzq && casillas[i-1-tamaño].classList.contains('bomba')) total++;
+                if (i > tamaño && !estaBordeIzq && casillas[i - 1 - tamaño].classList.contains('bomba')) total++;
 
                 // Checkeamos casilla inferior
-                if (i < (tamaño*(tamaño-1)) && casillas[i+tamaño].classList.contains('bomba')) total++;
+                if (i < (tamaño * (tamaño - 1)) && casillas[i + tamaño].classList.contains('bomba')) total++;
 
                 // Checkeamos casilla siguiente de la fila siguiente
-                if (i < (tamaño*(tamaño-1)) && !estaBordeDech && casillas[i+1+tamaño].classList.contains('bomba')) total++;
-                
+                if (i < (tamaño * (tamaño - 1)) && !estaBordeDech && casillas[i + 1 + tamaño].classList.contains('bomba')) total++;
+
                 // Checkeamos casilla anterior de la fila siguiente
-                if (i < (tamaño*(tamaño-1)) && !estaBordeIzq && casillas[i-1+tamaño].classList.contains('bomba')) total++;
+                if (i < (tamaño * (tamaño - 1)) && !estaBordeIzq && casillas[i - 1 + tamaño].classList.contains('bomba')) total++;
 
                 // Guardamos el nº de bombas en atributo data
                 casillas[i].setAttribute('data', total);
@@ -56,36 +59,36 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    
+
     function revelarCasillas(casilla) {
         const idCasilla = parseInt(casilla.id);
-        const estaBordeIzq = (idCasilla % tamaño === 0);            
+        const estaBordeIzq = (idCasilla % tamaño === 0);
         const estaBordeDech = (idCasilla % tamaño === tamaño - 1);
 
         setTimeout(() => {
             // Simulamos clik en la casilla anterior
-            if (idCasilla > 0 && !estaBordeIzq) click(casillas[idCasilla-1]);
-                    
+            if (idCasilla > 0 && !estaBordeIzq) click(casillas[idCasilla - 1]);
+
             // Simulamos clik en la casilla siguiente
-            if (idCasilla < (tamaño*tamaño-2) && !estaBordeDech) click(casillas[idCasilla+1]);
+            if (idCasilla < (tamaño * tamaño - 2) && !estaBordeDech) click(casillas[idCasilla + 1]);
 
             // Simulamos clik en la casilla superior
-            if (idCasilla >= tamaño) click(casillas[idCasilla-tamaño]);
-            
+            if (idCasilla >= tamaño) click(casillas[idCasilla - tamaño]);
+
             // Simulamos clik en la casilla siguiente de la fila anterior
-            if (idCasilla > (tamaño-1) && !estaBordeDech) click(casillas[idCasilla+1-tamaño]);
-            
+            if (idCasilla > (tamaño - 1) && !estaBordeDech) click(casillas[idCasilla + 1 - tamaño]);
+
             // Simulamos clik en la casilla anterior de la fila anterior
-            if (idCasilla > (tamaño+1) && !estaBordeIzq) click(casillas[idCasilla-1-tamaño]);
+            if (idCasilla > (tamaño + 1) && !estaBordeIzq) click(casillas[idCasilla - 1 - tamaño]);
 
             // Simulamos clik en la casilla inferior
-            if (idCasilla < (tamaño*(tamaño-1))) click(casillas[idCasilla+tamaño]);
+            if (idCasilla < (tamaño * (tamaño - 1))) click(casillas[idCasilla + tamaño]);
 
             // Simulamos clik en la casilla siguiente de la fila siguiente
-            if (idCasilla < (tamaño*tamaño-tamaño-2) && !estaBordeDech) click(casillas[idCasilla+1+tamaño]);
-            
+            if (idCasilla < (tamaño * tamaño - tamaño - 2) && !estaBordeDech) click(casillas[idCasilla + 1 + tamaño]);
+
             // Simulamos clik en la casilla anterior de la fila siguiente
-            if (idCasilla < (tamaño*tamaño-tamaño) && !estaBordeIzq) click(casillas[idCasilla-1+tamaño]);
+            if (idCasilla < (tamaño * tamaño - tamaño) && !estaBordeIzq) click(casillas[idCasilla - 1 + tamaño]);
 
         }, 10);
     }
@@ -132,41 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    const countdownEl = document.getElementById('countdown');
-   
-    dificultad = parseInt(document.getElementById('dificultad').value);
-    let timeLeft;
-    if(dificultad === 1){  timeLeft = 300; }
-    if(dificultad === 2){  timeLeft = 250; }
-    if(dificultad === 3){  timeLeft = 200; }
-    if(dificultad === 4){  timeLeft = 150; }
-    if(dificultad === 5){  timeLeft = 100; }
-    
-    function countdown() {
 
-      const minutes = Math.floor(timeLeft / 60);
-      let seconds = timeLeft % 60;
-    
-      // Agrega un 0 antes del número si es menor a 10
-      if (seconds < 10) {
-        seconds = `0${seconds}`;
-      }
-    
-      // Actualiza el contenido del elemento del contador
-      countdownEl.innerHTML = `${minutes}:${seconds}`;
-    
-      // Resta un segundo al tiempo restante
-      timeLeft--;
-    
-      // Si se acaba el tiempo, detén el contador
-      if (timeLeft < 0) {
-        clearInterval(countdownInterval);
-        countdownEl.innerHTML = 'Se acabo el tiempo! Suerte la próxima';
-      }
-    }
-    
-    // Ejecuta la función del contador cada segundo
-    const countdownInterval = setInterval(countdown, 1000);
+
+
 
 
 
@@ -183,7 +154,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (aciertos === numBombas) {
             finPartida = true;
+            switch (dificultad) {
+                case 1:
+                    puntos = 100 * numBombas;
+                    break;
+                case 2:
+                    puntos = 200 * numBombas;
+                    break;
+                case 3:
+                    puntos = 300 * numBombas;
+                    break;
+                default:
+                    puntos = 0;
+            }
+            puntuacion.innerHTML = "<h2>" + nombreUsuario + ", tu puntuacion es de " + puntos + "<h2>";
             resultado.textContent = 'Eres un titán! Enhorabuena!';
+
+            var marcador = localStorage.setItem('puntuacion', puntos);
+            
+            // Obtener la puntuación anterior del usuario desde localStorage
+            var puntuacionAnterior = localStorage.getItem('puntuacion');
+
+            // Comprobar si la puntuación actual es mayor que la puntuación anterior
+            if (puntos > puntuacionAnterior) {
+                // Guardar la puntuación actual como la puntuación más alta
+                localStorage.setItem('puntuacion', puntos);
+            }
+
+            // Mostrar la puntuación más alta al usuario
+            var puntuacionMaxima = localStorage.getItem('puntuacion');
+            document.getElementById('puntuacion-maxima').textContent = nombreUsuario + ', tu puntuación más alta es: ' + puntuacionMaxima;
         }
     }
 
@@ -196,7 +196,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contadorBanderasRestantes.textContent = (numBombas - numBanderas);
     }
 
-        
+
     function click(casilla) {
         // Comprobamos si la casilla no es clickeable
         if (casilla.classList.contains('marcada') || casilla.classList.contains('bandera') || finPartida) return;
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
             casilla.classList.add('marcada');
-                
+
             // Casilla sin bombas cerca
             revelarCasillas(casilla);
 
@@ -222,29 +222,70 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     function dobleClick(casilla) {
-         // Comprobamos si la casilla no es clickeable
-         if (!casilla.classList.contains('marcada') || finPartida) return;
+        // Comprobamos si la casilla no es clickeable
+        if (!casilla.classList.contains('marcada') || finPartida) return;
 
-         revelarCasillas(casilla);
+        revelarCasillas(casilla);
     }
 
 
-    
     function crearJuego() {
         tamaño = parseInt(document.getElementById('tamaño').value);
         numBombas = parseInt(document.getElementById('num-bombas').value);
+        countdownEl = document.getElementById('countdown');
+        dificultad = parseInt(document.getElementById('dificultad').value);
+
+        dificultad = parseInt(document.getElementById('dificultad').value);
+
+
+        
+        if (dificultad === 1) { timeLeft = 300; }
+        if (dificultad === 2) { timeLeft = 250; }
+        if (dificultad === 3) { timeLeft = 200; }
+
+
+        function cuentaAtras() {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+
+            // Agrega un 0 antes del número si es menor a 10
+            if (seconds < 10) {
+                seconds = `0${seconds}`;
+            }
+
+            // Actualiza el contenido del elemento del contador
+            countdownEl.innerHTML = `${minutes}:${seconds}`;
+
+            // Si se acaba el tiempo, detén el contador
+            if (timeLeft <= 0) {
+                countdownEl.innerHTML = '<h3>Se acabo el tiempo! Suerte la próxima<h3>';
+                const casillaAleatoria = Math.floor(Math.random() * casillas.length);
+                revelarCasillas(casillas[casillaAleatoria]);
+                click(casillas[casillaAleatoria]);
+                click(casillas[casillaAleatoria]);
+            } else {
+                // Resta un segundo al tiempo restante
+                timeLeft--;
+
+                // Actualiza el contador después de 1 segundo
+                setTimeout(cuentaAtras, 1000);
+            }
+        }
+
+
+
 
         // Comprobamos que se cumplen los requisitos de creacion del juego
-        if (tamaño<6 || tamaño>20) {
-            alert(`El tamaño no puede ser menor de 6 ni mayor de 20`);
+        if (tamaño < 5 || tamaño > 20) {
+            alert(`El tamaño no puede ser menor de 5 ni mayor de 20`);
             return;
         }
-        if (numBombas<1) {
+        if (numBombas < 1) {
             alert(`El número de bombas tiene que ser como mínimo 1`);
             return;
         }
-        if (numBombas > tamaño*tamaño) {
-            alert(`El número de bombas no puede ser superior al producto de \"Tamaño\" x \"Tamaño\" que en este caso es: ${tamaño*tamaño}`);
+        if (numBombas > tamaño * tamaño) {
+            alert(`El número de bombas no puede ser superior al producto de \"Tamaño\" x \"Tamaño\" que en este caso es: ${tamaño * tamaño}`);
             return;
         }
 
@@ -268,24 +309,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Creamos un matriz con bombas aleatorias
         const arrayBombas = Array(numBombas).fill('bomba');
-        const arrayVacios = Array(tamaño*tamaño - numBombas).fill('vacio');
+        const arrayVacios = Array(tamaño * tamaño - numBombas).fill('vacio');
         const arrayCompleto = arrayVacios.concat(arrayBombas);
-        arrayCompleto.sort(() =>  Math.random() - 0.5 );
-        
-        for(let i=0; i < tamaño*tamaño; i++) {
+        arrayCompleto.sort(() => Math.random() - 0.5);
+
+        for (let i = 0; i < tamaño * tamaño; i++) {
             const casilla = document.createElement('div');
             casilla.setAttribute('id', i);
             casilla.classList.add(arrayCompleto[i]);
             juego.appendChild(casilla);
             casillas.push(casilla);
-            
+
             // Añadimos función al hacer click
             casilla.addEventListener('click', () => {
                 click(event.target);
             });
 
             // Añadimos función al hacer click derecho
-            casilla.oncontextmenu = function(event) {
+            casilla.oncontextmenu = function (event) {
                 event.preventDefault();
                 añadirBandera(casilla);
             }
@@ -298,5 +339,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         añadeNumeros();
         actualizaNumBanderas();
+        cuentaAtras();
     }
 });
